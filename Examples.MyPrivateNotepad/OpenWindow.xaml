@@ -1,0 +1,40 @@
+﻿<Window x:Class="MyPrivateNotepad.OpenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        ResizeMode="NoResize" BorderBrush="Transparent"
+        SizeToContent="WidthAndHeight"
+        Icon="Resources/icon.ico"
+        Title="Open Note"
+        WindowStartupLocation="CenterScreen">
+    <StackPanel Orientation="Vertical">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Note" Margin="5,5,0,0" />
+            <ComboBox Name="NoteBox" Grid.Column="1" Grid.Row="0" Margin="5,5,5,0"
+                      SelectionChanged="BoxSelectionChanged" />
+            <Image Name="NameValidation" Grid.Column="2" Grid.Row="0"
+                   Margin="5,5,5,0" Width="24" Height="24" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Password" Margin="5,5,0,0" />
+            <TextBox Name="PassBox" Grid.Column="1" Grid.Row="1"
+                     VerticalContentAlignment="Center"
+                     TextChanged="TextBoxChange" Margin="5,5,5,0" />
+            <Image Name="PassValidation" Grid.Column="2" Grid.Row="1"
+                   Margin="5,5,5,0" Width="24" Height="24" />
+        </Grid>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+            <Button Name="OpenButton" Click="ButtonClick" Content="Open" IsDefault="True"
+                    Padding="8,4,8,4" />
+            <Button Name="CancelButton" Click="ButtonClick" Content="Cancel" IsCancel="True"
+                    Margin="5,0,0,0" Padding="8,4,8,4" />
+        </StackPanel>
+    </StackPanel>
+</Window>
