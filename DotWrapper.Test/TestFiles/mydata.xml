@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<People>
+  <Person name="Jack" age="42" />
+  <Person name="Josh" age="64" />
+  <Person name="John" age="20" />
+</People>
