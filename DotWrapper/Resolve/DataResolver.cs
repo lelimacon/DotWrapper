@@ -97,12 +97,12 @@ namespace DotWrapper.Resolve
 
         internal static DataResolver DefaultResolveChain(byte[] data)
         {
-            return new CryptoResolver(new CompressionResolver(data));
+            return new CryptoResolver(new CryptoResolver(data));
         }
 
         internal static DataResolver DefaultResolveChain(string password, byte[] data = null)
         {
-            return new CryptoResolver(new CompressionResolver(data), password);
+            return new CompressionResolver(new CryptoResolver(data, password));
         }
     }
 }
