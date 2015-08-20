@@ -1,8 +1,8 @@
-﻿using DotWrapper;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using DotWrapper;
 
 namespace MyFileWrapper
 {
@@ -26,18 +26,18 @@ namespace MyFileWrapper
             outPath = outPath ?? NewOutputPath(Assembly.GetExecutingAssembly().Location);
             byte[] data = File.ReadAllBytes(inPath);
             Wrap.Chunks.Add(new Chunk(name, data));
-            outPath = Wrap.Write(outPath);
+            Wrap.Write(outPath);
             if (!Silent)
-                Console.WriteLine("Wrapped {0} to file {1}.", name, outPath);
+                Console.WriteLine("Wrapped \"{0}\" to file \"{1}\".", name, outPath);
         }
 
         public void Remove(string outPath)
         {
             outPath = outPath ?? NewOutputPath(Assembly.GetExecutingAssembly().Location);
             Wrap.Chunks.Clear();
-            outPath = Wrap.Write(outPath);
+            Wrap.Write(outPath);
             if (!Silent)
-                Console.WriteLine("Removed all data in file {0}.", outPath);
+                Console.WriteLine("Removed all data in file \"{0}\".", outPath);
         }
 
         public void Remove(string name, string outPath)
@@ -50,9 +50,9 @@ namespace MyFileWrapper
             outPath = outPath ?? NewOutputPath(Assembly.GetExecutingAssembly().Location);
             Chunk chunk = Wrap.GetChunk(name);
             Wrap.Chunks.Remove(chunk);
-            outPath = Wrap.Write(outPath);
+            Wrap.Write(outPath);
             if (!Silent)
-                Console.WriteLine("Removed {0} in file {1}.", chunk.Name, outPath);
+                Console.WriteLine("Removed \"{0}\" in file \"{1}\".", chunk.Name, outPath);
         }
 
         /// <summary>
@@ -68,11 +68,13 @@ namespace MyFileWrapper
             return Path.Combine(dir, name + "-new" + info.Extension);
         }
 
-        public void Edit(string name, string outPath)
+        public void Rename(string outPath, string oldname, string newname)
         {
+            outPath = outPath ?? NewOutputPath(Assembly.GetExecutingAssembly().Location);
+            Wrap.GetChunk(oldname).Name = newname;
+            Wrap.Write(outPath);
             if (!Silent)
-                Console.WriteLine("Nothing here.");
-            // TODO
+                Console.WriteLine("Renamed \"{0}\" to \"{1}\".", oldname, newname);
         }
 
         public void Dump(string name, string outPath, bool execute)
@@ -98,7 +100,7 @@ namespace MyFileWrapper
             outPath = outPath ?? chunk.Name;
             File.WriteAllBytes(outPath, chunk.Data);
             if (!Silent)
-                Console.WriteLine("Dumped {0} to file {1}.", chunk.Name, outPath);
+                Console.WriteLine("Dumped \"{0}\" to file \"{1}\".", chunk.Name, outPath);
         }
 
         public void Dump(string name)

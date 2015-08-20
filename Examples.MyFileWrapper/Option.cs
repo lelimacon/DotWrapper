@@ -1,32 +1,32 @@
 ﻿using System;
 using System.Linq;
 
-namespace DotWrapper.Arguments
+namespace MyFileWrapper
 {
     /// <summary>
-    /// Option class, can be used to check and retrieve the program arguments.
+    ///     Option class, can be used to check and retrieve the program arguments.
     /// </summary>
     public class Option
     {
         /// <summary>
-        /// The short name of the argument (one character).
+        ///     The short name of the argument (one character).
         /// </summary>
         public char Name { get; set; }
 
         /// <summary>
-        /// Decides whether the option awaits an argument or not.
+        ///     Decides whether the option awaits an argument or not.
         /// </summary>
         public bool HasArg { get; private set; }
 
         /// <summary>
-        /// This value will be set by the argument crawling algorithm.
-        /// True if the option is called (with or without an argument).
+        ///     This value will be set by the argument crawling algorithm.
+        ///     True if the option is called (with or without an argument).
         /// </summary>
         public bool Specified { get; set; }
 
         /// <summary>
-        /// This value will be set by the argument crawling algorithm.
-        /// Contains the argument, if any, or null.
+        ///     This value will be set by the argument crawling algorithm.
+        ///     Contains the argument, if any, or null.
         /// </summary>
         public string Arg { get; set; }
 
@@ -39,7 +39,7 @@ namespace DotWrapper.Arguments
         }
 
         /// <summary>
-        /// Create an Option with no name, typically just a command or string.
+        ///     Create an Option with no name, typically just a command or string.
         /// </summary
         public static Option NoName()
         {
@@ -97,18 +97,19 @@ namespace DotWrapper.Arguments
         }
 
         /// <summary>
-        /// Gets the argument with no name with the given index.
+        ///     Gets the argument with no name with the given index.
         /// </summary>
         /// <param name="options">the options array</param>
         /// <param name="index">index of the no-name argument</param>
-        /// <returns>the option, can throw an ArgumentException</returns>s
+        /// <returns>the option, can throw an ArgumentException</returns>
+        /// s
         public static Option NoName(this Option[] options, int index)
         {
             return options.First(o => (char) index == o.Name);
         }
 
         /// <summary>
-        /// Accessor for the "arg" Option property.
+        ///     Accessor for the "arg" Option property.
         /// </summary>
         public static string Arg(this Option[] options, char name)
         {
@@ -116,7 +117,7 @@ namespace DotWrapper.Arguments
         }
 
         /// <summary>
-        /// Accessor for the "specified" Option property.
+        ///     Accessor for the "specified" Option property.
         /// </summary>
         /// <returns></returns>
         public static bool Spec(this Option[] options, char name)

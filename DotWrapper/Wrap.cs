@@ -5,7 +5,6 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace DotWrapper
 {
@@ -67,25 +66,24 @@ namespace DotWrapper
         #region WRITE
 
         /// <summary>
-        ///     Creates a file for this wrap (whipes file original data).
+        ///     Creates a file for this wrap (wipes file's original data).
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">The path to the wrap.</param>
+        /// <returns>Number of bytes written.</returns>
         [Pure]
-        public string Write(string path)
+        public int Write(string path)
         {
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentNullException("path");
             using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write))
-                Write(stream);
-            return path;
+                return Write(stream);
         }
 
         /// <summary>
         ///     Writes this wrap to the stream.
         ///     Base data is not encrypted in any way.
         /// </summary>
-        /// <param name="stream"></param>
+        /// <param name="s">The stream (must be valid).</param>
         /// <returns>Number of bytes written.</returns>
         [Pure]
         public int Write(Stream stream)

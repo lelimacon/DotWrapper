@@ -1,9 +1,8 @@
-﻿using DotWrapper;
-using DotWrapper.Arguments;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using DotWrapper;
 
 namespace MyFileWrapper
 {
@@ -21,7 +20,6 @@ namespace MyFileWrapper
                 // Simple wrap testing.
                 WrapProcessor processor = new WrapProcessor(Wrap.This(), false);
                 processor.WrapIn("Program.cs", "test.cs", null, false);
-                //processor.WrapIn("MyFileWrapper.exe.config", "test.xml", null, false);
                 processor.Wrap = Wrap.Read("MyFileWrapper-new.exe");
                 processor.Dump(null); // Dump everything
                 Console.WriteLine("Done.");
@@ -80,11 +78,10 @@ namespace MyFileWrapper
                         processor.Remove(on.Arg, oo.Arg);
                         break;
 
-                    // TODO: determine the arguments (change name & password)
-                    case "edit":
-                        os = new[] {on, oo};
+                    case "rename":
+                        os = new[] {oo, Option.NoName(), Option.NoName()};
                         os.CrawlArgs(args, 1);
-                        processor.Edit(on.Arg, oo.Arg);
+                        processor.Rename(oo.Arg, os.Arg((char) 1), os.Arg((char) 2));
                         break;
 
                     case "dump":
@@ -145,10 +142,10 @@ namespace MyFileWrapper
             stream.WriteLine("Usage : wrapper.exe CMD OPTS");
             stream.WriteLine("");
             stream.WriteLine("Commands");
-            stream.WriteLine("    wrap    [-n NAME] [-o PATH] [-p PASS | -X] [-E] PATH");
+            stream.WriteLine("    wrap    [-n NAME] [-o PATH] [-E] PATH");
             stream.WriteLine("    remove  [-n NAME] [-o PATH]");
-            stream.WriteLine("    edit    [-n NAME] [-o PATH] [-p PASS]");
-            stream.WriteLine("    dump    [-n NAME] [-E -o PATH | -L] [-p PASS | -X]");
+            stream.WriteLine("    rename  [-o PATH] OLDNAME NEWNAME");
+            stream.WriteLine("    dump    [-n NAME] [-E -o PATH | -L]");
             stream.WriteLine("    info    [-n NAME]");
             stream.WriteLine("");
             stream.WriteLine("Options");
@@ -160,7 +157,6 @@ namespace MyFileWrapper
             stream.WriteLine("    -p Specify encryption/decryption key.");
             stream.WriteLine("    -E Execute executable content or mark data as executable.");
             stream.WriteLine("    -L Dump to console.");
-            stream.WriteLine("    -X Do not encrypt/decrypt.");
             return errCode;
         }
 
