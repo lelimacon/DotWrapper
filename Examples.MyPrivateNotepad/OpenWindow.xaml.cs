@@ -114,9 +114,11 @@ namespace MyPrivateNotepad
                 box.BorderBrush = valid
                     ? new SolidColorBrush(Colors.Transparent)
                     : new SolidColorBrush(Colors.DarkRed);
-            NameValidation.Source = ValidIcon(valid ? IconType.Green
-                : (!aggressive && string.IsNullOrEmpty(box.Text) ? IconType.Gray
-                : IconType.Red));
+            NameValidation.Source = ValidIcon(valid
+                ? IconType.Green
+                : (!aggressive && string.IsNullOrEmpty(box.Text)
+                    ? IconType.Gray
+                    : IconType.Red));
             return valid;
         }
 
@@ -132,9 +134,11 @@ namespace MyPrivateNotepad
                 box.BorderBrush = valid
                     ? new SolidColorBrush(Colors.Transparent)
                     : new SolidColorBrush(Colors.DarkRed);
-            PassValidation.Source = ValidIcon(valid ? IconType.Green
-                : (!aggressive && string.IsNullOrEmpty(box.Text) ? IconType.Gray
-                : IconType.Red));
+            PassValidation.Source = ValidIcon(valid
+                ? IconType.Green
+                : (!aggressive && string.IsNullOrEmpty(box.Text)
+                    ? IconType.Gray
+                    : IconType.Red));
             return valid;
         }
 
@@ -142,7 +146,7 @@ namespace MyPrivateNotepad
         {
             Gray,
             Green,
-            Red,
+            Red
         }
 
         /// <summary>

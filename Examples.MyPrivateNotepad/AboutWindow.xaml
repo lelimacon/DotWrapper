@@ -11,10 +11,11 @@
             <Bold>MyPrivateNotepad</Bold> is an example program using the <Bold>DotWrapper</Bold> library,
             a general-use data wrapper.<LineBreak />
             Fork me on
-            <Hyperlink NavigateUri="http://www.google.com"
+            <Hyperlink NavigateUri="https://github.com/lelimacon/DotWrapper"
                        RequestNavigate="Hyperlink_RequestNavigate">
                 GitHub
-            </Hyperlink>!
+            </Hyperlink>
+            !
         </TextBlock>
         <Grid>
             <Grid.RowDefinitions>
@@ -26,21 +27,21 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Content="Version" Margin="5,5,0,0"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="Version" Margin="5,5,0,0" />
             <TextBox Name="VersionBox" VerticalContentAlignment="Center" IsReadOnly="True"
-                 Grid.Column="1" Grid.Row="0" Margin="5,5,5,0" />
-            <Label Grid.Row="1" Grid.Column="0" Content="License" Margin="5,5,0,0"/>
+                     Grid.Column="1" Grid.Row="0" Margin="5,5,5,0" />
+            <Label Grid.Row="1" Grid.Column="0" Content="License" Margin="5,5,0,0" />
             <TextBlock Name="LicenseBox" Grid.Column="1" Grid.Row="1" Margin="5,5,5,0"
                        Padding="0,5,0,0">
-                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0.html"
-                       RequestNavigate="Hyperlink_RequestNavigate">
-                    Apache License 2.0
+                <Hyperlink NavigateUri="https://raw.githubusercontent.com/lelimacon/DotWrapper/master/LICENSE.txt"
+                           RequestNavigate="Hyperlink_RequestNavigate">
+                    MIT License
                 </Hyperlink>
             </TextBlock>
             <StackPanel Grid.Column="1" Grid.Row="2"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal" Margin="5">
-                <Button Name="CloseButton"  Click="ButtonClick" Content="Close" Padding="8,4,8,4"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal" Margin="5">
+                <Button Name="CloseButton" Click="ButtonClick" Content="Close" Padding="8,4,8,4"
                         IsDefault="True" IsCancel="True" />
             </StackPanel>
         </Grid>

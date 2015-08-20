@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
@@ -27,7 +26,7 @@ namespace MyPrivateNotepad
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

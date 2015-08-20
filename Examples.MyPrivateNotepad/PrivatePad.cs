@@ -1,10 +1,10 @@
-﻿using DotWrapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using DotWrapper;
 using DotWrapper.Resolve;
 
 namespace MyPrivateNotepad
@@ -98,6 +98,7 @@ namespace MyPrivateNotepad
             TabModel chunk = GetTab(name);
             return (chunk != null && OpenTabs.Remove(chunk));
         }
+
         public bool CloseAllTabs()
         {
             if (!CheckNames())
@@ -151,10 +152,9 @@ namespace MyPrivateNotepad
             if (string.IsNullOrEmpty(name))
                 return false;
             Chunk chunk = _wrap.Chunks.Find(c => c.Name == name);
-            return (((CryptoResolver)chunk.ResolveChain).Password == password);
+            return (((CryptoResolver) chunk.ResolveChain).Password == password);
         }
 
         #endregion Tabs Operations
-
     }
 }

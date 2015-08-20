@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace MyPrivateNotepad
 {
@@ -97,7 +96,7 @@ namespace MyPrivateNotepad
 
         private void TabTitleChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox textBox = (TextBox)sender;
+            TextBox textBox = (TextBox) sender;
             if (textBox.Tag == null)
                 return;
             int pos = (int) textBox.Tag;
@@ -131,7 +130,7 @@ namespace MyPrivateNotepad
         {
             if (!TabControl.HasItems)
                 return;
-            TabModel tab = (TabModel)TabControl.SelectedContent;
+            TabModel tab = (TabModel) TabControl.SelectedContent;
             _pad.CloseTab(tab.Name);
             UpdateTitle();
         }
