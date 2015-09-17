@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Security.Cryptography;
 using DotWrapper.Resolve;
+using CryptoAlg = DotWrapper.Resolve.CryptoResolver.CryptoAlgorithm;
 
 namespace DotWrapper.Utils
 {
@@ -28,20 +29,21 @@ namespace DotWrapper.Utils
         }
 
         /// <summary>
-        ///     In order to decrypt the data, one needs the password, salt and IV.
+        ///     Will encrypt a byte array.
         /// </summary>
         /// <param name="data">The data that will be encrypted.</param>
+        /// <param name="crypto">The cryptography algorigthm.</param>
         /// <param name="password">The password for encrypting.</param>
         /// <param name="iv">Output for generated Initialization Vector.</param>
-        /// <returns></returns>
+        /// <returns>The encrypted byte array.</returns>
         [Pure]
-        public static byte[] Encrypt(this byte[] data, string password, out byte[] iv)
+        public static byte[] Encrypt(this byte[] data, CryptoAlg crypto, string password, out byte[] iv)
         {
             Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrEmpty(password));
             byte[] res;
             // AesEncryptor sets the key and iv values.
-            ICryptoTransform encryptor = AesEncryptor(password, out iv);
+            ICryptoTransform encryptor = AesEncryptor(password, crypto, out iv);
             if (data.Length == 0)
                 return new byte[] {};
             using (MemoryStream memoryStream = new MemoryStream())
@@ -54,14 +56,22 @@ namespace DotWrapper.Utils
             return res;
         }
 
+        /// <summary>
+        ///     Will decrypt a byte array.
+        /// </summary>
+        /// <param name="data">The data that will be encrypted.</param>
+        /// <param name="crypto">The cryptography algorigthm.</param>
+        /// <param name="password">The password for encrypting.</param>
+        /// <param name="iv">Output for generated Initialization Vector.</param>
+        /// <returns>The decrypted byte array.</returns>
         [Pure]
-        public static byte[] Decrypt(this byte[] data, string password, byte[] iv)
+        public static byte[] Decrypt(this byte[] data, CryptoAlg crypto, string password, byte[] iv)
         {
             Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrEmpty(password));
             Debug.Assert(!ArrayUtils.IsNullOrEmpty(iv));
             byte[] res;
-            ICryptoTransform decryptor = AesDecryptor(password, iv);
+            ICryptoTransform decryptor = AesDecryptor(password, crypto, iv);
             if (data.Length == 0)
                 return new byte[] {};
             using (MemoryStream memoryStream = new MemoryStream(data))
@@ -78,12 +88,12 @@ namespace DotWrapper.Utils
         #region CryptoTransform (encryptors/decryptors)
 
         [Pure]
-        private static ICryptoTransform AesEncryptor(string password, out byte[] iv)
+        private static ICryptoTransform AesEncryptor(string password, CryptoAlg crypto, out byte[] iv)
         {
             Debug.Assert(!string.IsNullOrEmpty(password));
             Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, CryptoResolver.Salt);
-            SymmetricAlgorithm algo = GetCryptoAlgorithm();
-            algo.Key = key.GetBytes(algo.KeySize / 8);
+            SymmetricAlgorithm algo = GetCryptoAlgorithm(crypto);
+            algo.Key = key.GetBytes(algo.KeySize/8);
             iv = algo.IV.Replace((byte) 0, (byte) 1); // Generates IV.
             algo.IV = iv;
             algo.IV = iv;
@@ -93,35 +103,31 @@ namespace DotWrapper.Utils
         }
 
         [Pure]
-        private static ICryptoTransform AesDecryptor(string password, byte[] iv)
+        private static ICryptoTransform AesDecryptor(string password, CryptoAlg crypto, byte[] iv)
         {
             Debug.Assert(!string.IsNullOrEmpty(password));
             Debug.Assert(!ArrayUtils.IsNullOrEmpty(iv));
             Debug.Print("DECRYPT IV=" + string.Join("-", iv));
             Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, CryptoResolver.Salt);
-            SymmetricAlgorithm algo = GetCryptoAlgorithm();
+            SymmetricAlgorithm algo = GetCryptoAlgorithm(crypto);
             algo.IV = iv;
-            algo.Key = key.GetBytes(algo.KeySize / 8);
+            algo.Key = key.GetBytes(algo.KeySize/8);
             algo.Padding = PaddingMode.PKCS7;
             return algo.CreateDecryptor(algo.Key, algo.IV);
         }
 
-        private static SymmetricAlgorithm GetCryptoAlgorithm()
+        private static SymmetricAlgorithm GetCryptoAlgorithm(CryptoAlg crypto)
         {
-            switch (CryptoResolver.Crypto)
+            switch (crypto)
             {
-                case CryptoResolver.CryptoAlgorithm.AES:
+                case CryptoAlg.AES:
                     return new RijndaelManaged();
-
-                case CryptoResolver.CryptoAlgorithm.DES:
+                case CryptoAlg.DES:
                     return new DESCryptoServiceProvider();
-
-                case CryptoResolver.CryptoAlgorithm.TripleDES:
+                case CryptoAlg.TripleDES:
                     return new TripleDESCryptoServiceProvider();
-
-                case CryptoResolver.CryptoAlgorithm.RC2:
+                case CryptoAlg.RC2:
                     return new RC2CryptoServiceProvider();
-
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -38,7 +38,7 @@ This resolver has the following properties :
 | IV       | :heavy_check_mark: | :heavy_minus_sign: | :heavy_check_mark: |
 | Key      | :heavy_check_mark: | :heavy_minus_sign: | :heavy_minus_sign: |
 
-The encryption algorithm can be chosen from these (defaults to AES) :
+The encryption algorithm will also be packed and can be chosen from these (defaults to AES) :
 
 | Algorithm      | KeySize | BlockSize |
 |:-------------- |:-------:|:---------:|

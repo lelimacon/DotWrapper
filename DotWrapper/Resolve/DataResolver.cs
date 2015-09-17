@@ -1,7 +1,7 @@
-﻿using DotWrapper.Utils;
-using System;
+﻿using System;
 using System.Diagnostics.Contracts;
 using System.IO;
+using DotWrapper.Utils;
 
 namespace DotWrapper.Resolve
 {
@@ -102,7 +102,7 @@ namespace DotWrapper.Resolve
 
         internal static DataResolver DefaultResolveChain(string password, byte[] data = null)
         {
-            return new CompressionResolver(new CryptoResolver(data, password));
+            return new CompressionResolver(new CryptoResolver(data, CryptoResolver.CryptoAlgorithm.AES, password));
         }
     }
 }
