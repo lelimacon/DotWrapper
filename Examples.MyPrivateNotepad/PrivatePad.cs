@@ -152,7 +152,7 @@ namespace MyPrivateNotepad
             if (string.IsNullOrEmpty(name))
                 return false;
             Chunk chunk = _wrap.Chunks.Find(c => c.Name == name);
-            return (((CryptoResolver) chunk.ResolveChain).Password == password);
+            return (((CryptoResolver) chunk.ResolveChain.ChildResolver).Password == password);
         }
 
         #endregion Tabs Operations

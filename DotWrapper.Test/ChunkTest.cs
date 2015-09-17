@@ -29,7 +29,7 @@ namespace DotWrapper.Test
             new Chunk(null);
         }
 
-        [Test(Description = "Password constructor.")]
+        [Test(Description = "Password constructor with default resolve chain.")]
         public void Constructor2Test1()
         {
             const string password = "@S1mPlePa$$w0rd";
@@ -37,10 +37,10 @@ namespace DotWrapper.Test
             Assert.True(chunk.Name == "test");
             Assert.True(chunk.Data.ShallowEquals(new byte[] {}));
             Assert.True(chunk.ResolveChain != null);
-            Assert.True(chunk.ResolveChain is CryptoResolver);
-            Assert.True(chunk.ResolveChain.ChildResolver is CompressionResolver);
+            Assert.True(chunk.ResolveChain is CompressionResolver); 
+            Assert.True(chunk.ResolveChain.ChildResolver is CryptoResolver);
             Assert.True(chunk.ResolveChain.ChildResolver.ChildResolver is IdResolver);
-            Assert.True(((CryptoResolver) chunk.ResolveChain).Password == password);
+            Assert.True(((CryptoResolver) chunk.ResolveChain.ChildResolver).Password == password);
         }
 
         [Test(Description = "Password constructor with empty password.")]
