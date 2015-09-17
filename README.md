@@ -38,7 +38,7 @@ This resolver has the following properties :
 | IV       | :heavy_check_mark: | :heavy_minus_sign: | :heavy_check_mark: |
 | Key      | :heavy_check_mark: | :heavy_minus_sign: | :heavy_minus_sign: |
 
-The encryption algorithm will also be packed and can be chosen from these (defaults to AES) :
+The cryptographic algorithm will also be packed and can be chosen from these (defaults to AES) :
 
 | Algorithm      | KeySize | BlockSize |
 |:-------------- |:-------:|:---------:|
@@ -55,9 +55,11 @@ The encryption algorithm will also be packed and can be chosen from these (defau
 
 - **FileResolver** : Gets or sets the data from a file path.
 
-### More obfuscation
+### More obfuscation : bytewise transforms
 
 Additionally, all resolvers packed fields and properties will undergo bytewise involution transforms (such as `T(T(b)) = b`) to prevent any data from being read directly on the file.
+
+The transform is defined at Chunk-level and is not packed with the data. There are currently four available : Xor, EvenXor, OddXor and Reverse.
 
 
 ## Getting Started

@@ -73,6 +73,7 @@
     <Compile Include="Resolve\ChainResolvingTest.cs" />
     <Compile Include="Resolve\FileResolverTest.cs" />
     <Compile Include="Resolve\Base64ResolverTest.cs" />
+    <Compile Include="Utils\ByteTransformUtilsTest.cs" />
     <Compile Include="Utils\ArrayUtilsTest.cs" />
     <Compile Include="Utils\CryptoUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
