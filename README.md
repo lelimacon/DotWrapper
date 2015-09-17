@@ -16,7 +16,7 @@ A Wrap is the object representation of a wrapper. It contains a set of chunks th
 The default resolve chain is as follows :
 
 ```csharp
-CompressionResolver(new CryptoResolver(data));
+new CompressionResolver(new CryptoResolver(data));
 ```
 
 Which means that :
@@ -92,10 +92,10 @@ Console.WriteLine(Encoding.Default.GetString(data));
 ### Custom resolver (NetResolver)
 
 ```csharp
-// Add a chunk named "mychunk" with looong url ><.
-var a = "https://raw.githubusercontent.com/lelimacon/DotWrapper/master/DotWrapper.Test/TestFiles/myBase64message.txt";
-var chunk = new Chunk("mychunk", new NetResolver(a, new Base64Resolver()));
-// Create wrap and write it to a file named "SuperWrap".
+var url = "https://raw.githubusercontent.com/lelimacon/DotWrapper/master/DotWrapper.Test/TestFiles/myBase64message.txt";
+// To unpack, the data will be fetched on the internet then decoded from base64.
+var chunk = new Chunk("mychunk", new NetResolver(url, new Base64Resolver()));
+// Create wrap and save it to a file named "SuperWrap".
 new Wrap(null, new List<Chunk> { chunk }).Write("SuperWrap");
 // Read wrap and extract data from chunk "mychunk".
 var data = Wrap.Read("SuperWrap").GetChunk("mychunk").Data;
@@ -167,7 +167,6 @@ Most of the operations require the executable to duplicate itself to another fil
 |:------ |:----------- |
 | **-n** | Specify a name. If not specified, the file name will be choosen |
 | **-o** | Specify output folder or path whith -n. If not specified, a default file name will be set |
-| **-p** | Specify encryption/decryption key |
 | **-E** | Execute executable content or mark data as executable |
 | **-L** | Dump to console |
 
@@ -175,4 +174,4 @@ Note : The majority of the commands will run on all files when -n is not specifi
 
 ## License
 
-DotWrapper is licensed under the [MIT license](https://raw.githubusercontent.com/lelimacon/DotWrapper/master/LICENSE.txt).
+DotWrapper is licensed under the [MIT license](https://github.com/lelimacon/DotWrapper/blob/master/LICENSE.txt).
